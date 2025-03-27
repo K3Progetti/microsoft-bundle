@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.6](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.5...v1.0.6) (2025-03-27)
+
+
+### Bug Fixes
+
+* load services ([d407420](https://github.com/K3Progetti/microsoft-bundle/commit/d407420371e29b952bf69fa44b1f4f1558772010))
+
 ### [1.0.5](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.4...v1.0.5) (2025-03-27)
 
 
