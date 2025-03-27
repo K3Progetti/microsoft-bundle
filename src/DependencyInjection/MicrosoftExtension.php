@@ -2,6 +2,8 @@
 
 namespace K3Progetti\MicrosoftBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
@@ -22,6 +24,10 @@ class MicrosoftExtension extends Extension
         $container->setParameter('microsoft.client_secret', $config['client_secret']);
         $container->setParameter('microsoft.graph_api_url', $config['graph_api_url']);
 
+
+        // Carico il services
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../resources/config'));
+        $loader->load('services.yaml');
     }
 
     /**
