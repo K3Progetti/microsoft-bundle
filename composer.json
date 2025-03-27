@@ -1,5 +1,5 @@
 {
-  "name": "k3progetti/mirosoft-bundle",
+  "name": "k3progetti/microsoft-bundle",
   "description": "Bundle Symfony per l'integrazione con Microsoft Graph API",
   "type": "symfony-bundle",
   "license": "MIT",
