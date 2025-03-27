@@ -12,7 +12,7 @@ $configSource = __DIR__ . '/../resources/config/packages/microsoft.yaml.dist';
 $routesFile = $projectRoot . '/config/routes.yaml';
 $routesBlock = <<<YAML
 
-jwt_bundle_routes:
+microsoft_bundle_routes:
   resource: '@MicrosoftBundle/Controller/'
   type: attribute
 YAML;
