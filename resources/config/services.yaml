@@ -1,0 +1,10 @@
+services:
+  K3Progetti\MicrosoftBundle\:
+    resource: '../../src/'
+    exclude:
+      - '../../src/DependencyInjection/'
+      - '../../src/Entity/'
+      - '../../src/Tests/'
+    autowire: true
+    autoconfigure: true
+    public: true
