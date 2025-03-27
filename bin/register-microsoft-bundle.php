@@ -3,7 +3,7 @@
 
 $projectRoot = getcwd();
 $bundlesFile = $projectRoot . '/config/bundles.php';
-$bundleClass = 'K3Progetti\MicrosoftBundle\MicrosoftBundle::class';
+$bundleClass = 'K3Progetti\\MicrosoftBundle\\MicrosoftBundle::class';
 $bundleLine = "    $bundleClass => ['all' => true],";
 
 $configTarget = $projectRoot . '/config/packages/microsoft.yaml';
@@ -17,12 +17,9 @@ microsoft_bundle_routes:
   type: attribute
 YAML;
 
-function green($text): string
-{ return "\033[32m$text\033[0m"; }
-function yellow($text): string
-{ return "\033[33m$text\033[0m"; }
-function red($text): string
-{ return "\033[31m$text\033[0m"; }
+function green($text): string { return "\033[32m$text\033[0m"; }
+function yellow($text): string { return "\033[33m$text\033[0m"; }
+function red($text): string { return "\033[31m$text\033[0m"; }
 
 echo yellow("🔍 File bundles: $bundlesFile\n");
 
@@ -36,23 +33,20 @@ $argv = $_SERVER['argv'];
 $remove = in_array('--remove', $argv, true);
 
 if ($remove) {
-    // Rimozione bundle
     if (strpos($contents, $bundleLine) !== false) {
         $contents = str_replace($bundleLine . "\n", '', $contents);
-        $contents = str_replace($bundleLine, '', $contents); // fallback
+        $contents = str_replace($bundleLine, '', $contents);
         file_put_contents($bundlesFile, $contents);
         echo green("🗑️  MicrosoftBundle rimosso da config/bundles.php\n");
     } else {
         echo yellow("ℹ️  MicrosoftBundle non presente in config/bundles.php\n");
     }
 
-    // Rimozione microsoft.yaml
     if (file_exists($configTarget)) {
         unlink($configTarget);
         echo green("🗑️  File microsoft.yaml rimosso da config/packages.\n");
     }
 
-    // Rimozione blocco routes
     if (file_exists($routesFile)) {
         $routesContent = file_get_contents($routesFile);
         if (strpos($routesContent, $routesBlock) !== false) {
@@ -64,7 +58,6 @@ if ($remove) {
         }
     }
 } else {
-    // Aggiungo bundle
     if (strpos($contents, $bundleClass) === false) {
         $pattern = '/(return\s+\[\n)(.*?)(\n\];)/s';
         if (preg_match($pattern, $contents, $matches)) {
@@ -83,7 +76,6 @@ if ($remove) {
         echo yellow("ℹ️  MicrosoftBundle è già presente in config/bundles.php\n");
     }
 
-    // Copia microsoft.yaml se non esiste
     if (!file_exists($configTarget)) {
         if (file_exists($configSource)) {
             copy($configSource, $configTarget);
@@ -95,7 +87,6 @@ if ($remove) {
         echo yellow("ℹ️  File microsoft.yaml già presente in config/packages.\n");
     }
 
-    // Aggiunta blocco routes
     if (file_exists($routesFile)) {
         $routesContent = file_get_contents($routesFile);
         if (strpos($routesContent, $routesBlock) === false) {
@@ -106,5 +97,33 @@ if ($remove) {
         }
     } else {
         echo red("❌ File config/routes.yaml non trovato.\n");
+    }
+
+    // ➕ Aggiungo variabili .env se mancanti
+    $envFile = $projectRoot . '/.env';
+    $envVars = [
+        'MICROSOFT_CLIENT_ID' => '',
+        'MICROSOFT_TENANT_ID' => '',
+        'MICROSOFT_CLIENT_SECRET' => '',
+    ];
+
+    if (file_exists($envFile)) {
+        $envContent = file_get_contents($envFile);
+        $newLines = [];
+
+        foreach ($envVars as $key => $value) {
+            if (!preg_match("/^$key=/m", $envContent)) {
+                $newLines[] = "$key=$value";
+                echo green("➕ Variabile $key aggiunta al file .env\n");
+            } else {
+                echo yellow("ℹ️  Variabile $key già presente in .env\n");
+            }
+        }
+
+        if (!empty($newLines)) {
+            file_put_contents($envFile, "\n# Start - Microsoft API\n" . implode("\n", $newLines) . "\n", FILE_APPEND);
+        }
+    } else {
+        echo yellow("⚠️  File .env non trovato. Nessuna variabile aggiunta.\n");
     }
 }
