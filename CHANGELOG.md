@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.4...v1.0.5) (2025-03-27)
+
+
+### Bug Fixes
+
+* register-microsoft-bundle.php ([a033a41](https://github.com/K3Progetti/microsoft-bundle/commit/a033a41ec6762fba6a057a16691064390241e02a))
+
 ### [1.0.4](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.3...v1.0.4) (2025-03-27)
 
 
