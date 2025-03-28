@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.8](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.7...v1.0.8) (2025-03-28)
+
+
+### Bug Fixes
+
+* microsoft-bridge-bundle import ([87e8e64](https://github.com/K3Progetti/microsoft-bundle/commit/87e8e643a28707e4cdd47d7e99901e6d83c41dcd))
+
 ### [1.0.7](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.6...v1.0.7) (2025-03-27)
 
 
