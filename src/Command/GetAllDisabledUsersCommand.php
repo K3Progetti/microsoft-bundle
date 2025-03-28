@@ -2,7 +2,7 @@
 
 namespace K3Progetti\MicrosoftBundle\Command;
 
-use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
+use K3Progetti\MicrosoftBridgeBundle\Service\MicrosoftService;
 use App\Repository\UserRepository;
 use App\Utils\Queue\QueuedCommand;
 use Symfony\Component\Console\Attribute\AsCommand;

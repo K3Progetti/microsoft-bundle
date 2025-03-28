@@ -3,7 +3,6 @@
 namespace K3Progetti\MicrosoftBundle\Service;
 
 use Exception;
-use Microsoft\Graph;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -223,7 +222,7 @@ class MicrosoftService
     {
         $queryParts = [];
 
-        // Costruisce la parte dei filtri
+        // Costruisco la parte dei filtri
         if (!empty($filters)) {
             $filterStrings = [];
             foreach ($filters as $field => $value) {
