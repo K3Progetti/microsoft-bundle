@@ -2,7 +2,7 @@
 
 namespace K3Progetti\MicrosoftBundle\Command;
 
-use K3Progetti\MicrosoftBridgeBundle\Service\MicrosoftService;
+use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Random\RandomException;
