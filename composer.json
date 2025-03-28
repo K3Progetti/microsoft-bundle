@@ -13,7 +13,7 @@
     "php": ">=8.2",
     "symfony/framework-bundle": "^7.0",
     "symfony/http-client": "~7.0",
-    "symfony/microsoft-bridge-bundle": "~1.0"
+    "symfony/messenger": "~1.0"
   },
   "autoload": {
     "psr-4": {

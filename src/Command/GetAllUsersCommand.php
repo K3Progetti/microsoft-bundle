@@ -26,7 +26,8 @@ class GetAllUsersCommand extends Command
     private UserRepository $userRepository;
 
     public function __construct(
-        MicrosoftService $microsoftService, UserRepository $userRepository,
+        MicrosoftService $microsoftService,
+        UserRepository $userRepository,
 
     )
     {
