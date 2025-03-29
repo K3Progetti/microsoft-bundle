@@ -2,6 +2,7 @@
 
 namespace K3Progetti\MicrosoftBundle\Command;
 
+use K3Progetti\MicrosoftBundle\Repository\UserMicrosoftDataRepository;
 use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
 use App\Repository\UserRepository;
 use App\Utils\Queue\QueuedCommand;
@@ -22,28 +23,25 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class GetAllDisabledUsersCommand extends Command
 {
 
-
-    private MicrosoftService $microsoftService;
-    private UserRepository $userRepository;
     private MessageBusInterface $messageBus;
 
     public function __construct(
-        MicrosoftService    $microsoftService,
-        UserRepository      $userRepository,
-        MessageBusInterface $messageBus
+        private readonly MicrosoftService            $microsoftService,
+        private readonly UserRepository              $userRepository,
+        private readonly UserMicrosoftDataRepository $userMicrosoftDataRepository,
+        MessageBusInterface                          $messageBus
 
     )
     {
         parent::__construct();
-        $this->microsoftService = $microsoftService;
-        $this->userRepository = $userRepository;
         $this->messageBus = $messageBus;
     }
 
     /**
      * @return void
      */
-    protected function configure(): void
+    protected
+    function configure(): void
     {
         parent::configure();
     }
@@ -71,11 +69,12 @@ class GetAllDisabledUsersCommand extends Command
             $io->progressAdvance();
 
             // Creo lo user
-            $externalId = $microsoftUser['id'];
+            $microsoftId = $microsoftUser['id'];
 
             //
-            $user = $this->userRepository->findOneBy(['externalId' => $externalId]);
-            if ($user) {
+            $userMicrosoft = $this->userMicrosoftDataRepository->findOneBy(['microsoftId' => $microsoftId]);
+            if ($userMicrosoft) {
+                $user = $userMicrosoft->getUser();
                 $user->setActive(false);
                 $user->setRoles([]);
 
@@ -84,9 +83,10 @@ class GetAllDisabledUsersCommand extends Command
                     'jwt:remove-jwt-token-user',
                     [$user->getId()]
                 ));
-            }
 
-            $this->userRepository->save($user);
+
+                $this->userRepository->save($user);
+            }
         }
         $io->progressFinish();
 

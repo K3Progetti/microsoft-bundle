@@ -2,6 +2,8 @@
 
 namespace K3Progetti\MicrosoftBundle\Command;
 
+use K3Progetti\MicrosoftBundle\Entity\UserMicrosoftData;
+use K3Progetti\MicrosoftBundle\Repository\UserMicrosoftDataRepository;
 use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -24,16 +26,19 @@ class GetAllUsersCommand extends Command
 
     private MicrosoftService $microsoftService;
     private UserRepository $userRepository;
+    private UserMicrosoftDataRepository $userMicrosoftDataRepository;
 
     public function __construct(
-        MicrosoftService $microsoftService,
-        UserRepository $userRepository,
+        MicrosoftService            $microsoftService,
+        UserRepository              $userRepository,
+        UserMicrosoftDataRepository $userMicrosoftDataRepository
 
     )
     {
         parent::__construct();
         $this->microsoftService = $microsoftService;
         $this->userRepository = $userRepository;
+        $this->userMicrosoftDataRepository = $userMicrosoftDataRepository;
     }
 
     /**
@@ -67,7 +72,7 @@ class GetAllUsersCommand extends Command
             $io->progressAdvance();
 
             // Creo lo user
-            $externalId = $microsoftUser['id'];
+            $microsoftId = $microsoftUser['id'];
             $email = strtolower($microsoftUser['mail']);
             if (empty($email)) {
                 $email = strtolower($microsoftUser['userPrincipalName']);
@@ -76,26 +81,34 @@ class GetAllUsersCommand extends Command
             $name = ucwords(strtolower($microsoftUser['givenName']));
             $phone = $microsoftUser['mobilePhone'];
             //
-            $user = $this->userRepository->findOneBy(['externalId' => $externalId]);
-            if ($user === null) {
+            $user = null;
+            $userMicrosoft = $this->userMicrosoftDataRepository->findOneBy(['microsoftId' => $microsoftId]);
+            if ($userMicrosoft === null) {
+                $userMicrosoft = new UserMicrosoftData();
+                $userMicrosoft->setMicrosoftId($microsoftId);
+            } else {
                 // Provo a cercarlo per email
                 $user = $this->userRepository->findOneBy(['email' => $email]);
                 if ($user === null) {
                     $user = new User();
                     $user->setUsername($email);
+                    $user->setEmail($email);
                     $user->setActive(false);
                     $user->setPassword(bin2hex(random_bytes(16))); // una password a caso
+
+                    $this->userRepository->save($user);
+
+                    $userMicrosoft->setUser($user);
+                    $this->userMicrosoftDataRepository->save($userMicrosoft);
                 }
             }
+            // Aggiorno cmq alcuni dati
             if ($user) {
-                $user->setExternalId($externalId);
-                $user->setEmail($email);
                 $user->setSurname($surname);
                 $user->setName($name);
                 $user->setPhone($phone);
             }
 
-            $this->userRepository->save($user);
         }
         $io->progressFinish();
 
