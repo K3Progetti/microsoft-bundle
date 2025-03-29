@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserMicrosoftDataRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Table(name: 'user_microsoft_data')]
+#[ORM\Table(name: 'app_user_microsoft')]
 class UserMicrosoftData
 {
     #[ORM\Id]
