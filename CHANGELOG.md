@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.15](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.14...v1.0.15) (2025-03-29)
+
+
+### Bug Fixes
+
+* name table ([968e97e](https://github.com/K3Progetti/microsoft-bundle/commit/968e97ea4b426fe3550019ae7d9a5dc359022ecf))
+
 ### [1.0.14](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.13...v1.0.14) (2025-03-29)
 
 
