@@ -2,6 +2,7 @@
 
 namespace K3Progetti\MicrosoftBundle\Repository;
 
+use App\Repository\Repository;
 use Doctrine\Persistence\ManagerRegistry;
 use K3Progetti\MicrosoftBundle\Entity\UserMicrosoftData;
 
