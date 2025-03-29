@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.13](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.12...v1.0.13) (2025-03-29)
+
+
+### Features
+
+* add entity microsoft ([5532d80](https://github.com/K3Progetti/microsoft-bundle/commit/5532d80f6b8ac271fe9202593d77a00f2b3db0a9))
+
 ### [1.0.12](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.11...v1.0.12) (2025-03-29)
 
 
