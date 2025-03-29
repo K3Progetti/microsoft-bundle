@@ -22,6 +22,11 @@ class MicrosoftService
     private HttpClientInterface $httpClient;
     private string $graphApiUrl;
 
+    // Override dinamici opzionali
+    private ?string $overrideClientId = null;
+    private ?string $overrideTenantId = null;
+    private ?string $overrideClientSecret = null;
+
     public function __construct
     (
         HttpClientInterface   $httpClient,
@@ -37,6 +42,22 @@ class MicrosoftService
 
     }
 
+
+    /**
+     * Lo utilizzo qualora serva passare i valori dinamicamente
+     * @param string $clientId
+     * @param string $tenantId
+     * @param string $clientSecret
+     * @return $this
+     */
+    public function withCredentials(string $clientId, string $tenantId, string $clientSecret): self
+    {
+        $this->overrideClientId = $clientId;
+        $this->overrideTenantId = $tenantId;
+        $this->overrideClientSecret = $clientSecret;
+        return $this;
+    }
+
     /**
      * Ottengo l\'access token APP
      *
@@ -50,13 +71,17 @@ class MicrosoftService
     private function getAccessToken(): ?string
     {
 
-        $url = sprintf('https://login.microsoftonline.com/%s/oauth2/v2.0/token', $this->tenantId);
+        $clientId = $this->overrideClientId ?? $this->clientId;
+        $tenantId = $this->overrideTenantId ?? $this->tenantId;
+        $clientSecret = $this->overrideClientSecret ?? $this->clientSecret;
+
+        $url = sprintf('https://login.microsoftonline.com/%s/oauth2/v2.0/token', $tenantId);
 
         $response = $this->httpClient->request('POST', $url, [
             'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
             'body' => [
-                'client_id' => $this->clientId,
-                'client_secret' => $this->clientSecret,
+                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
                 'scope' => 'https://graph.microsoft.com/.default',
                 'grant_type' => 'client_credentials',
             ],
