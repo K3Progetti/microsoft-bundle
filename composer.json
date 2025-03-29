@@ -14,7 +14,9 @@
     "symfony/framework-bundle": "^7.0",
     "symfony/http-client": "~7.0",
     "symfony/messenger": "~7.0",
-    "symfony/redis-messenger": "~7.0"
+    "symfony/redis-messenger": "~7.0",
+    "doctrine/orm": "^2.15",
+    "doctrine/doctrine-bundle": "^2.10"
   },
   "autoload": {
     "psr-4": {
