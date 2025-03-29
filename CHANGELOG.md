@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.16](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.15...v1.0.16) (2025-03-29)
+
+
+### Features
+
+* add withCredentials ([d1d5ecf](https://github.com/K3Progetti/microsoft-bundle/commit/d1d5ecf87ed3675f413ce67d0e87f96b9cb48f99))
+
 ### [1.0.15](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.14...v1.0.15) (2025-03-29)
 
 
