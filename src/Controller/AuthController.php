@@ -4,8 +4,8 @@
 namespace K3Progetti\MicrosoftBundle\Controller;
 
 
+use K3Progetti\MicrosoftBundle\Repository\UserMicrosoftDataRepository;
 use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
-use App\Repository\UserRepository;
 use App\Utils\Result;
 use Exception;
 use K3Progetti\JwtBundle\Helper\AuthHelper;
@@ -25,20 +25,20 @@ class AuthController extends AbstractController
 {
     private MicrosoftService $microsoftService;
     private Result $result;
-    private UserRepository $userRepository;
     private AuthHelper $authHelper;
+    private UserMicrosoftDataRepository $userMicrosoftDataRepository;
 
     public function __construct(
-        Result           $result,
-        MicrosoftService $microsoftService,
-        UserRepository   $userRepository,
-        AuthHelper       $authHelper
+        Result                      $result,
+        MicrosoftService            $microsoftService,
+        UserMicrosoftDataRepository $userMicrosoftDataRepository,
+        AuthHelper                  $authHelper
     )
     {
         $this->microsoftService = $microsoftService;
         $this->result = $result;
-        $this->userRepository = $userRepository;
         $this->authHelper = $authHelper;
+        $this->userMicrosoftDataRepository = $userMicrosoftDataRepository;
     }
 
     /**
@@ -66,7 +66,8 @@ class AuthController extends AbstractController
             $userMicrosoft = $this->microsoftService->getMe($externalToken);
 
             // Cerco lo User
-            $user = $this->userRepository->findOneBy(['externalId' => $userMicrosoft['id']]);
+            $userMicrosoft = $this->userMicrosoftDataRepository->findOneBy(['microsoftId' => $userMicrosoft['id']]);
+            $user = $userMicrosoft->getUser();
 
             // Verifico se l'utente esiste
             $this->authHelper->ensureUserExists($user);
