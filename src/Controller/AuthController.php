@@ -76,13 +76,11 @@ class AuthController extends AbstractController
             // Verifico se l'utente è disabilitato
             $this->authHelper->ensureUserIsActive($user, $companyId);
 
-            // Verifico se ha dei ruoli
-            if (count($user->getRoles()) === 0) {
-                return new JsonResponse(['message' => 'Account non configurato'], Response::HTTP_LOCKED);
-            }
+            // Verifico i ruoli
+            $this->authHelper->ensureUserRoles($user, $companyId);
 
+            // Genero i token
             $response = $this->authHelper->buildTokenResponse($user, $request);
-
 
             return new JsonResponse($response);
         } catch (Exception $ex) {
