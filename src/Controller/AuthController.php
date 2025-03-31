@@ -58,6 +58,7 @@ class AuthController extends AbstractController
 
             $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $externalToken = $data['accessToken'] ?? null;
+            $companyId = $data['companyId'] ?? null;
 
             if (!$externalToken) {
                 return new JsonResponse(['error' => 'Credenziali Microsoft non valide'], Response::HTTP_UNAUTHORIZED);
@@ -73,7 +74,7 @@ class AuthController extends AbstractController
             $this->authHelper->ensureUserExists($user);
 
             // Verifico se l'utente è disabilitato
-            $this->authHelper->ensureUserIsActive($user);
+            $this->authHelper->ensureUserIsActive($user, $companyId);
 
             // Verifico se ha dei ruoli
             if (count($user->getRoles()) === 0) {
