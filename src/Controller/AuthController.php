@@ -50,7 +50,7 @@ class AuthController extends AbstractController
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    #[Route('/login_microsoft', name: 'login_microsoft', methods: ['POST'])]
+    #[Route('/login-microsoft', name: 'login_microsoft', methods: ['POST'])]
     public function loginMicrosoft(Request $request): JsonResponse
     {
         try {
