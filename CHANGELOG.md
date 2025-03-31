@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.18](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.17...v1.0.18) (2025-03-31)
+
+
+### Bug Fixes
+
+* rotta ([01a0f25](https://github.com/K3Progetti/microsoft-bundle/commit/01a0f25a72f1544c2e78452311a585752f072e8a))
+
 ### [1.0.17](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.16...v1.0.17) (2025-03-30)
 
 
