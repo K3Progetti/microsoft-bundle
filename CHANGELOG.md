@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.19](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.18...v1.0.19) (2025-03-31)
+
+
+### Bug Fixes
+
+* add companyId for multi company ([7c90e40](https://github.com/K3Progetti/microsoft-bundle/commit/7c90e40d19b14062f622939cb66667f4f130d564))
+
 ### [1.0.18](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.17...v1.0.18) (2025-03-31)
 
 
