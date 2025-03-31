@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.20](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.19...v1.0.20) (2025-03-31)
+
+
+### Bug Fixes
+
+* richiamo nuova utility per controllo ruoli ([19d054b](https://github.com/K3Progetti/microsoft-bundle/commit/19d054b5388a6424d0cc23cbb142d5c8985fd72b))
+
 ### [1.0.19](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.18...v1.0.19) (2025-03-31)
 
 
