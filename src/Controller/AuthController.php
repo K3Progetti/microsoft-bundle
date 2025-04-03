@@ -9,10 +9,12 @@ use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
 use App\Utils\Result;
 use Exception;
 use K3Progetti\JwtBundle\Helper\AuthHelper;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -68,6 +70,9 @@ class AuthController extends AbstractController
 
             // Cerco lo User
             $userMicrosoft = $this->userMicrosoftDataRepository->findOneBy(['microsoftId' => $userMicrosoft['id']]);
+            if($userMicrosoft === null) {
+                throw new RuntimeException('Utente non configurato. Contattare IT');
+            }
             $user = $userMicrosoft->getUser();
 
             // Verifico se l'utente esiste

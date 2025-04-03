@@ -66,7 +66,7 @@ class GetAllUsersCommand extends Command
         $io->title('Recupero gli utenti di microsoft');
 
         $microsoftUsers = $this->microsoftService->getAllUsers();
-        print_r($microsoftUsers);
+
         $io->progressStart(count($microsoftUsers));
         foreach ($microsoftUsers as $microsoftUser) {
             $io->progressAdvance();
@@ -89,24 +89,28 @@ class GetAllUsersCommand extends Command
             } else {
                 // Provo a cercarlo per email
                 $user = $this->userRepository->findOneBy(['email' => $email]);
-                if ($user === null) {
-                    $user = new User();
-                    $user->setUsername($email);
-                    $user->setEmail($email);
-                    $user->setActive(false);
-                    $user->setPassword(bin2hex(random_bytes(16))); // una password a caso
-
-                    $this->userRepository->save($user);
-
-                    $userMicrosoft->setUser($user);
-                    $this->userMicrosoftDataRepository->save($userMicrosoft);
-                }
             }
+
+            if ($user === null) {
+                $user = new User();
+                $user->setUsername($email);
+                $user->setEmail($email);
+                $user->setActive(false);
+                $user->setPassword(bin2hex(random_bytes(16))); // una password a caso
+
+                $this->userRepository->save($user);
+
+                $userMicrosoft->setUser($user);
+                $this->userMicrosoftDataRepository->save($userMicrosoft);
+            }
+
             // Aggiorno cmq alcuni dati
             if ($user) {
                 $user->setSurname($surname);
                 $user->setName($name);
                 $user->setPhone($phone);
+
+                $this->userRepository->save($user);
             }
 
         }
