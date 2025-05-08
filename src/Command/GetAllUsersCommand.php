@@ -2,8 +2,8 @@
 
 namespace K3Progetti\MicrosoftBundle\Command;
 
-use K3Progetti\MicrosoftBundle\Entity\UserMicrosoftData;
-use K3Progetti\MicrosoftBundle\Repository\UserMicrosoftDataRepository;
+use K3Progetti\MicrosoftBundle\Entity\MicrosoftUser;
+use K3Progetti\MicrosoftBundle\Repository\MicrosoftUserRepository;
 use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -26,12 +26,12 @@ class GetAllUsersCommand extends Command
 
     private MicrosoftService $microsoftService;
     private UserRepository $userRepository;
-    private UserMicrosoftDataRepository $userMicrosoftDataRepository;
+    private MicrosoftUserRepository $userMicrosoftDataRepository;
 
     public function __construct(
-        MicrosoftService            $microsoftService,
-        UserRepository              $userRepository,
-        UserMicrosoftDataRepository $userMicrosoftDataRepository
+        MicrosoftService        $microsoftService,
+        UserRepository          $userRepository,
+        MicrosoftUserRepository $userMicrosoftDataRepository
 
     )
     {
@@ -84,7 +84,7 @@ class GetAllUsersCommand extends Command
             $user = null;
             $userMicrosoft = $this->userMicrosoftDataRepository->findOneBy(['microsoftId' => $microsoftId]);
             if ($userMicrosoft === null) {
-                $userMicrosoft = new UserMicrosoftData();
+                $userMicrosoft = new MicrosoftUser();
                 $userMicrosoft->setMicrosoftId($microsoftId);
             } else {
                 // Provo a cercarlo per email

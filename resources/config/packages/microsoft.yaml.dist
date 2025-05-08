@@ -4,3 +4,7 @@ microsoft:
   tenant_id: '%env(MICROSOFT_TENANT_ID)%'
   client_secret: '%env(MICROSOFT_CLIENT_SECRET)%'
 #  graph_api_url: https://graph.microsoft.com/v1.0
+
+#  Gruppi Auth
+#  auth:
+#    allowed_groups: ['crm'] # Se si desidera avere solo determinati gruppi per auth

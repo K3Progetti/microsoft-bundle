@@ -2,7 +2,7 @@
 
 namespace K3Progetti\MicrosoftBundle\Command;
 
-use K3Progetti\MicrosoftBundle\Repository\UserMicrosoftDataRepository;
+use K3Progetti\MicrosoftBundle\Repository\MicrosoftUserRepository;
 use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
 use App\Repository\UserRepository;
 use App\Utils\Queue\QueuedCommand;
@@ -26,10 +26,10 @@ class GetAllDisabledUsersCommand extends Command
     private MessageBusInterface $messageBus;
 
     public function __construct(
-        private readonly MicrosoftService            $microsoftService,
-        private readonly UserRepository              $userRepository,
-        private readonly UserMicrosoftDataRepository $userMicrosoftDataRepository,
-        MessageBusInterface                          $messageBus
+        private readonly MicrosoftService        $microsoftService,
+        private readonly UserRepository          $userRepository,
+        private readonly MicrosoftUserRepository $userMicrosoftDataRepository,
+        MessageBusInterface                      $messageBus
 
     )
     {

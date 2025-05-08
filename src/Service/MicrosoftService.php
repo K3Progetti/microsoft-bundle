@@ -269,6 +269,87 @@ class MicrosoftService
         return '?' . implode('&', $queryParts);
     }
 
+    /**
+     * Restituisce gli utenti di quel gruppo
+     *
+     * @param string $groupId
+     * @return array|null
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getUsersByGroupId(string $groupId): ?array
+    {
+        $accessToken = $this->getAccessToken();
+
+        try {
+            $apiName = sprintf('groups/%s/members', $groupId);
+
+
+            return $this->connect($apiName, $accessToken)->toArray()['value'];
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Restituisce tutti i gruppi presenti nel tenant
+     *
+     * @param bool|null $security
+     * @return array|null
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getAllGroups(?bool $security = null): ?array
+    {
+        $accessToken = $this->getAccessToken();
+
+        try {
+
+            if ($security !== null) {
+                $filters = [
+                    'securityEnabled' => $security ? 'true' : 'false', // Solo i gruppi sicurezza
+                ];
+            }
+
+
+            return $this->connect('groups', $accessToken, null, $filters)->toArray()['value'];
+
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * @param string $userEmail
+     * @return array|null
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getMessages(string $userEmail): ?array
+    {
+        $accessToken = $this->getAccessToken();
+
+        try {
+            $apiName = sprintf('users/%s/messages', $userEmail);
+            $response = $this->connect($apiName, $accessToken);
+            return $response->toArray()['value'];
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
 
 }
 

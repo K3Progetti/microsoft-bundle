@@ -4,7 +4,7 @@
 namespace K3Progetti\MicrosoftBundle\Controller;
 
 
-use K3Progetti\MicrosoftBundle\Repository\UserMicrosoftDataRepository;
+use K3Progetti\MicrosoftBundle\Repository\MicrosoftUserRepository;
 use K3Progetti\MicrosoftBundle\Service\MicrosoftService;
 use App\Utils\Result;
 use Exception;
@@ -28,13 +28,13 @@ class AuthController extends AbstractController
     private MicrosoftService $microsoftService;
     private Result $result;
     private AuthHelper $authHelper;
-    private UserMicrosoftDataRepository $userMicrosoftDataRepository;
+    private MicrosoftUserRepository $userMicrosoftDataRepository;
 
     public function __construct(
-        Result                      $result,
-        MicrosoftService            $microsoftService,
-        UserMicrosoftDataRepository $userMicrosoftDataRepository,
-        AuthHelper                  $authHelper
+        Result                  $result,
+        MicrosoftService        $microsoftService,
+        MicrosoftUserRepository $userMicrosoftDataRepository,
+        AuthHelper              $authHelper
     )
     {
         $this->microsoftService = $microsoftService;
