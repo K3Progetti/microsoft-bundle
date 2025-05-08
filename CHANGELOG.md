@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.21...v1.1.0) (2025-05-08)
+
+
+### Features
+
+* Modificata la struttura e aggiunto la lettura gruppi ed emails ([1c2e48d](https://github.com/K3Progetti/microsoft-bundle/commit/1c2e48d1897b4add71bdc7cdc07ab9ed23d4c351))
+
 ### [1.0.21](https://github.com/K3Progetti/microsoft-bundle/compare/v1.0.20...v1.0.21) (2025-04-03)
 
 
