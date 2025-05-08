@@ -21,7 +21,7 @@ class MicrosoftUser
     #[Groups(['microsoft_user'])]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'microsoftData', targetEntity: User::class)]
+    #[ORM\OneToOne(inversedBy: 'microsoftUser', targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotBlank]
     #[Groups(['microsoft_user'])]

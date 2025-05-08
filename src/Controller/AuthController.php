@@ -28,19 +28,19 @@ class AuthController extends AbstractController
     private MicrosoftService $microsoftService;
     private Result $result;
     private AuthHelper $authHelper;
-    private MicrosoftUserRepository $userMicrosoftDataRepository;
+    private MicrosoftUserRepository $microsoftUserRepository;
 
     public function __construct(
         Result                  $result,
         MicrosoftService        $microsoftService,
-        MicrosoftUserRepository $userMicrosoftDataRepository,
+        MicrosoftUserRepository $microsoftUserRepository,
         AuthHelper              $authHelper
     )
     {
         $this->microsoftService = $microsoftService;
         $this->result = $result;
         $this->authHelper = $authHelper;
-        $this->userMicrosoftDataRepository = $userMicrosoftDataRepository;
+        $this->microsoftUserRepository = $microsoftUserRepository;
     }
 
     /**
@@ -69,8 +69,8 @@ class AuthController extends AbstractController
             $userMicrosoft = $this->microsoftService->getMe($externalToken);
 
             // Cerco lo User
-            $userMicrosoft = $this->userMicrosoftDataRepository->findOneBy(['microsoftId' => $userMicrosoft['id']]);
-            if($userMicrosoft === null) {
+            $userMicrosoft = $this->microsoftUserRepository->findOneBy(['microsoftId' => $userMicrosoft['id']]);
+            if ($userMicrosoft === null) {
                 throw new RuntimeException('Utente non configurato. Contattare IT');
             }
             $user = $userMicrosoft->getUser();
