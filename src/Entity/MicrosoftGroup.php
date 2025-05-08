@@ -2,15 +2,14 @@
 
 namespace K3Progetti\MicrosoftBundle\Entity;
 
-use App\Entity\MicrosoftGroup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use K3Progetti\MicrosoftBundle\Repository\MicrosoftUserRepository;
+use K3Progetti\MicrosoftBundle\Repository\MicrosoftGroupRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: MicrosoftUserRepository::class)]
+#[ORM\Entity(repositoryClass: MicrosoftGroupRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: 'microsoft_groups')]
 class MicrosoftGroup
