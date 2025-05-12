@@ -199,6 +199,7 @@ class MicrosoftService
      * @param string $accessToken
      * @param array|null $selectFields
      * @param array|null $filters
+     * @param bool|null $remove
      * @return ResponseInterface
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
@@ -209,7 +210,8 @@ class MicrosoftService
         string $apiName,
         string $accessToken,
         ?array $selectFields = null,
-        ?array $filters = null
+        ?array $filters = null,
+        ?bool  $remove = false
     ): ResponseInterface
     {
 
@@ -221,7 +223,7 @@ class MicrosoftService
         $url = sprintf('%s/%s%s', $this->graphApiUrl, $apiName, $queryString);
 
         //
-        $response = $this->httpClient->request('GET', $url, [
+        $response = $this->httpClient->request($remove ? 'DELETE' : 'GET', $url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $accessToken,
                 'Accept' => 'application/json',
@@ -347,6 +349,33 @@ class MicrosoftService
 
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * @param string $userEmail
+     * @param string $messageId
+     * @return bool
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function deleteEmail(string $userEmail, string $messageId): bool
+    {
+        $accessToken = $this->getAccessToken();
+
+        try {
+            $apiName = sprintf('users/%s/messages/%s', $userEmail, $messageId);
+
+            $response = $this->connect($apiName, $accessToken, null, null, true);
+
+            return $response->getStatusCode() === 204; // 204 No Content = eliminazione avvenuta
+
+        } catch (Exception $e) {
+            dump("Errore durante l'eliminazione dell'email: " . $e->getMessage());
+            return false;
         }
     }
 
