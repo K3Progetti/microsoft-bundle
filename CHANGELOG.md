@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/K3Progetti/microsoft-bundle/compare/v1.1.2...v1.1.3) (2025-05-12)
+
+
+### Features
+
+* aggiunto delete users ([df8afec](https://github.com/K3Progetti/microsoft-bundle/commit/df8afec58bcf38e92a1ed323c1db831c61c035d0))
+
 ### [1.1.2](https://github.com/K3Progetti/microsoft-bundle/compare/v1.1.1...v1.1.2) (2025-05-08)
 
 
