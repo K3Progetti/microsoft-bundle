@@ -199,6 +199,7 @@ class MicrosoftService
      * @param string $accessToken
      * @param array|null $selectFields
      * @param array|null $filters
+     * @param int|null $top
      * @param bool|null $remove
      * @return ResponseInterface
      * @throws ClientExceptionInterface
@@ -211,11 +212,12 @@ class MicrosoftService
         string $accessToken,
         ?array $selectFields = null,
         ?array $filters = null,
+        ?int   $top = 100,
         ?bool  $remove = false
     ): ResponseInterface
     {
 
-        $queryString = $this->buildGraphApiQuery($selectFields, $filters);
+        $queryString = $this->buildGraphApiQuery($selectFields, $filters, $top);
 
 //        echo $queryString.PHP_EOL.PHP_EOL;
 //        die;
@@ -242,10 +244,10 @@ class MicrosoftService
     /**
      * @param array|null $selectFields
      * @param array|null $filters
-     * @param int $top
+     * @param int|null $top
      * @return string
      */
-    private function buildGraphApiQuery(?array $selectFields = null, ?array $filters = null, int $top = 100): string
+    private function buildGraphApiQuery(?array $selectFields = null, ?array $filters = null, ?int $top = 100): string
     {
         $queryParts = [];
 
@@ -344,7 +346,7 @@ class MicrosoftService
 
         try {
             $apiName = sprintf('users/%s/messages', $userEmail);
-            $response = $this->connect($apiName, $accessToken);
+            $response = $this->connect($apiName, $accessToken, null, null, 500);
             return $response->toArray()['value'];
 
         } catch (Exception $e) {
@@ -369,7 +371,7 @@ class MicrosoftService
         try {
             $apiName = sprintf('users/%s/messages/%s', $userEmail, $messageId);
 
-            $response = $this->connect($apiName, $accessToken, null, null, true);
+            $response = $this->connect($apiName, $accessToken, null, null, null, true);
 
             return $response->getStatusCode() === 204; // 204 No Content = eliminazione avvenuta
 
