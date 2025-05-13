@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/K3Progetti/microsoft-bundle/compare/v1.1.3...v1.1.4) (2025-05-13)
+
+
+### Bug Fixes
+
+* add top for getMessages ([0e8ee15](https://github.com/K3Progetti/microsoft-bundle/commit/0e8ee15130af6443c0932e58b6c46a3a927fed29))
+
 ### [1.1.3](https://github.com/K3Progetti/microsoft-bundle/compare/v1.1.2...v1.1.3) (2025-05-12)
 
 
