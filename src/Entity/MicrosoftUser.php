@@ -5,6 +5,7 @@ namespace K3Progetti\MicrosoftBundle\Entity;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use K3Progetti\MicrosoftBundle\Repository\MicrosoftUserRepository;
@@ -17,7 +18,7 @@ class MicrosoftUser
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Groups(['microsoft_user'])]
     private ?int $id = null;
 
@@ -27,7 +28,7 @@ class MicrosoftUser
     #[Groups(['microsoft_user'])]
     private User $user;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\NotBlank]
     #[Groups(['microsoft_user'])]
     private ?string $microsoftId = null;

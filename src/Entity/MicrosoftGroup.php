@@ -4,6 +4,7 @@ namespace K3Progetti\MicrosoftBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use K3Progetti\MicrosoftBundle\Repository\MicrosoftGroupRepository;
@@ -16,21 +17,21 @@ class MicrosoftGroup
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Groups(['microsoft_group'])]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\NotBlank]
     #[Groups(['microsoft_group'])]
     private ?string $name = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\NotBlank]
     #[Groups(['microsoft_group'])]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\NotBlank]
     #[Groups(['microsoft_group'])]
     private ?string $microsoftGroupId = null;

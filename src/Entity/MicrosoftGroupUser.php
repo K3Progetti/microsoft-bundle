@@ -2,19 +2,20 @@
 
 namespace K3Progetti\MicrosoftBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use K3Progetti\MicrosoftBundle\Repository\MicrosoftUserRepository;
+use K3Progetti\MicrosoftBundle\Repository\MicrosoftGroupUserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: MicrosoftUserRepository::class)]
+#[ORM\Entity(repositoryClass: MicrosoftGroupUserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: 'microsoft_group_user')]
 class MicrosoftGroupUser
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Groups(['user_microsoft'])]
     private ?int $id = null;
 
