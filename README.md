@@ -44,6 +44,7 @@ Aggiungi la configurazione in `config/packages/microsoft.yaml`:
 
 ```yaml
 microsoft:
+    user_class: App\Entity\User          # obbligatorio: la tua entità User
     client_id: '%env(MICROSOFT_CLIENT_ID)%'
     tenant_id: '%env(MICROSOFT_TENANT_ID)%'
     client_secret: '%env(MICROSOFT_CLIENT_SECRET)%'
@@ -59,6 +60,31 @@ MICROSOFT_CLIENT_ID=your-client-id
 MICROSOFT_TENANT_ID=your-tenant-id
 MICROSOFT_CLIENT_SECRET=your-client-secret
 ```
+
+---
+
+## Integrazione con la tua entità User
+
+La tua entità `User` deve implementare `K3Progetti\MicrosoftBundle\Contract\UserInterface`:
+
+```php
+use K3Progetti\MicrosoftBundle\Contract\UserInterface as MicrosoftUserInterface;
+
+class User implements MicrosoftUserInterface
+{
+    public function getId(): mixed { ... }
+    public function setUsername(string $username): static { ... }
+    public function setEmail(string $email): static { ... }
+    public function setActive(bool $active): static { ... }
+    public function setPassword(string $password): static { ... }
+    public function setSurname(?string $surname): static { ... }
+    public function setName(?string $name): static { ... }
+    public function setPhone(?string $phone): static { ... }
+    public function setRoles(array $roles): static { ... }
+}
+```
+
+Il bundle usa `resolve_target_entities` di Doctrine per collegare l'interfaccia alla tua classe concreta in modo automatico, senza dipendenze hardcoded su `App\*`.
 
 ---
 

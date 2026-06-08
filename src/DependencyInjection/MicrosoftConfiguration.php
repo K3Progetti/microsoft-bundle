@@ -13,6 +13,7 @@ class MicrosoftConfiguration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
+            ->scalarNode('user_class')->isRequired()->end()
             ->scalarNode('client_id')->isRequired()->end()
             ->scalarNode('tenant_id')->isRequired()->end()
             ->scalarNode('client_secret')->isRequired()->end()

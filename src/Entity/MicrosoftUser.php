@@ -2,13 +2,13 @@
 
 namespace K3Progetti\MicrosoftBundle\Entity;
 
-use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use K3Progetti\MicrosoftBundle\Contract\UserInterface;
 use K3Progetti\MicrosoftBundle\Repository\MicrosoftUserRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MicrosoftUserRepository::class)]
@@ -22,11 +22,11 @@ class MicrosoftUser
     #[Groups(['microsoft_user'])]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'microsoftUser', targetEntity: User::class)]
+    #[ORM\OneToOne(targetEntity: UserInterface::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotBlank]
     #[Groups(['microsoft_user'])]
-    private User $user;
+    private UserInterface $user;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\NotBlank]
@@ -48,12 +48,12 @@ class MicrosoftUser
         return $this->id;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(UserInterface $user): self
     {
         $this->user = $user;
         return $this;
