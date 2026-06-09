@@ -340,13 +340,13 @@ class MicrosoftService
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function getMessages(string $userEmail): ?array
+    public function getMessages(string $userEmail, ?int $top = 50): ?array
     {
         $accessToken = $this->getAccessToken();
 
         try {
             $apiName = sprintf('users/%s/messages', $userEmail);
-            $response = $this->connect($apiName, $accessToken, null, null, 500);
+            $response = $this->connect($apiName, $accessToken, null, null, $top);
             return $response->toArray()['value'];
 
         } catch (Exception $e) {
