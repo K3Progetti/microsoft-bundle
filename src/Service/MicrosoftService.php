@@ -355,6 +355,60 @@ class MicrosoftService
     }
 
     /**
+     * Restituisce la lista degli allegati di un messaggio (senza contentBytes)
+     *
+     * @param string $userEmail
+     * @param string $messageId
+     * @param int|null $top
+     * @return array|null
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getMessageAttachments(string $userEmail, string $messageId, ?int $top = 50): ?array
+    {
+        $accessToken = $this->getAccessToken();
+
+        try {
+            $apiName = sprintf('users/%s/messages/%s/attachments', $userEmail, $messageId);
+            $response = $this->connect($apiName, $accessToken, null, null, $top);
+            return $response->toArray()['value'];
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Restituisce un allegato specifico con il contenuto in base64 (campo contentBytes)
+     *
+     * @param string $userEmail
+     * @param string $messageId
+     * @param string $attachmentId
+     * @return array|null
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getMessageAttachment(string $userEmail, string $messageId, string $attachmentId): ?array
+    {
+        $accessToken = $this->getAccessToken();
+
+        try {
+            $apiName = sprintf('users/%s/messages/%s/attachments/%s', $userEmail, $messageId, $attachmentId);
+            $response = $this->connect($apiName, $accessToken, null, null, null);
+            return $response->toArray();
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    /**
      * @param string $userEmail
      * @param string $messageId
      * @return bool
