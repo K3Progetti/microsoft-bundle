@@ -201,11 +201,9 @@ class MicrosoftService
      * @param array|null $filters
      * @param int|null $top
      * @param bool|null $remove
+     * @param bool|null $update
+     * @param array|null $data
      * @return ResponseInterface
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
      */
     private function connect(
         string $apiName,
@@ -213,7 +211,9 @@ class MicrosoftService
         ?array $selectFields = null,
         ?array $filters = null,
         ?int   $top = 100,
-        ?bool  $remove = false
+        ?bool  $remove = false,
+        ?bool  $update = false,
+        ?array $data = null
     ): ResponseInterface
     {
 
@@ -224,13 +224,19 @@ class MicrosoftService
 
         $url = sprintf('%s/%s%s', $this->graphApiUrl, $apiName, $queryString);
 
-        //
-        $response = $this->httpClient->request($remove ? 'DELETE' : 'GET', $url, [
+        $options = [
             'headers' => [
                 'Authorization' => 'Bearer ' . $accessToken,
                 'Accept' => 'application/json',
             ],
-        ]);
+        ];
+
+        if (!empty($data)) {
+            $options['json'] = $data;
+        }
+
+        //
+        $response = $this->httpClient->request($remove ? 'DELETE' : ($update ? 'PATCH' : 'GET'), $url, $options);
 
         // Se la risposta non è 200, restituisco errore
         if ($response->getStatusCode() !== 200) {
@@ -435,6 +441,75 @@ class MicrosoftService
         }
     }
 
+    /**
+     * Scarica l'email .eml
+     * @param string $userEmail
+     * @param string $messageId
+     * @return string
+     */
+    public function getMessageMime(string $userEmail, string $messageId): string
+    {
+        $accessToken = $this->getAccessToken();
+
+        $apiName = sprintf('users/%s/messages/%s/$value', $userEmail, $messageId);
+
+
+        $response = $this->connect($apiName, $accessToken, null, null, null);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException($response->getContent(false));
+        }
+
+        return $response->getContent();
+    }
+
+    /**
+     * @param string $userEmail
+     * @param string $messageId
+     * @param bool $status
+     * @return array
+     */
+    public function updateMessageStatusRead(string $userEmail, string $messageId, bool $status): array
+    {
+        $accessToken = $this->getAccessToken();
+
+        $apiName = sprintf('users/%s/messages/%s', $userEmail, $messageId);
+        $data['isRead'] = $status;
+
+
+        $response = $this->connect($apiName, $accessToken, null, null, null, false, true, $data);
+
+
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException($response->getContent(false));
+        }
+
+        return $response->toArray();
+    }
+
+    /**
+     * @param string $userEmail
+     * @param string $messageId
+     * @param array|null $categories
+     * @return array
+     */
+    public function updateMessageCategory(string $userEmail, string $messageId, ?array $categories = null): array
+    {
+        $accessToken = $this->getAccessToken();
+
+        $apiName = sprintf('users/%s/messages/%s', $userEmail, $messageId);
+        $data['categories'] = $categories;
+
+
+        $response = $this->connect($apiName, $accessToken, null, null, null, false, true, $data);
+
+
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException($response->getContent(false));
+        }
+
+        return $response->toArray();
+    }
 
 }
 
