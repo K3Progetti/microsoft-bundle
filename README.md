@@ -4,7 +4,7 @@ Bundle Symfony per l'integrazione con Microsoft Graph API.
 
 ## Requisiti
 
-- PHP >= 8.2
+- PHP >= 8.4
 - Symfony 8.x
 - Doctrine ORM 3.x
 
@@ -15,6 +15,9 @@ Bundle Symfony per l'integrazione con Microsoft Graph API.
 - Recupero utenti da Microsoft 365
 - Filtraggio utenti disabilitati
 - Recupero e cancellazione email tramite Graph API
+- Recupero degli allegati di un messaggio (lista e download in base64)
+- Download del messaggio email in formato MIME (`.eml`)
+- Impostazione dello stato di lettura e delle categorie di un messaggio
 - Gestione gruppi e appartenenze
 - Login tramite token Microsoft
 - Servizio centralizzato per interagire con Graph API
@@ -98,6 +101,8 @@ MicrosoftBundle/
 │   │   ├── GetAllUsersCommand.php
 │   │   ├── GetAllDisabledUsersCommand.php
 │   │   └── GetAllGroupsCommand.php
+│   ├── Contract/
+│   │   └── UserInterface.php
 │   ├── Controller/
 │   │   └── AuthController.php
 │   ├── DependencyInjection/
@@ -147,8 +152,26 @@ class MyService
         // Recupera tutti i gruppi di sicurezza
         $groups = $this->microsoftService->getAllGroups(security: true);
 
-        // Recupera le email di un utente
-        $messages = $this->microsoftService->getMessages('user@example.com');
+        // Recupera le email di un utente (di default le prime 50)
+        $messages = $this->microsoftService->getMessages('user@example.com', top: 50);
+
+        // Lista degli allegati di un messaggio (senza contenuto)
+        $attachments = $this->microsoftService->getMessageAttachments('user@example.com', $messageId);
+
+        // Scarica un singolo allegato (contenuto in base64 nel campo contentBytes)
+        $attachment = $this->microsoftService->getMessageAttachment('user@example.com', $messageId, $attachmentId);
+
+        // Scarica il messaggio completo in formato MIME (.eml)
+        $eml = $this->microsoftService->getMessageMime('user@example.com', $messageId);
+
+        // Segna un messaggio come letto / non letto
+        $this->microsoftService->updateMessageStatusRead('user@example.com', $messageId, true);
+
+        // Imposta le categorie di un messaggio (null o [] per rimuoverle)
+        $this->microsoftService->updateMessageCategory('user@example.com', $messageId, ['Fatture', 'Urgente']);
+
+        // Elimina un'email
+        $this->microsoftService->deleteEmail('user@example.com', $messageId);
 
         // Credenziali dinamiche (override della configurazione globale)
         $this->microsoftService
